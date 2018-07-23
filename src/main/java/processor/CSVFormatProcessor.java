@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.net.URL;
+import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -46,9 +46,10 @@ import sample.entities.AbstractPersistable;
  */
 @Component
 @Slf4j
-public class CSVFormatProcessor<T> {
+public class CSVFormatProcessor {
 	private static final String PREFIX_CLASS_IN_COMMENT = "#class:";
-
+	private static String CSV_FILE_EXTENSION = ".csv";
+	
 	@Autowired
 	ApplicationContext ctx;
 
@@ -59,26 +60,25 @@ public class CSVFormatProcessor<T> {
 
 	private String processRootDirectory;
 	private String pathDelimeter = File.separator;
-	private String fileExtenstion = ".csv";
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Transactional
-	public void process(Class<T> clazz, String location) throws FileNotFoundException, IOException,
+	public void process(Class clazz, String location) throws FileNotFoundException, IOException,
 			NoSuchMethodException, SecurityException, IntrospectionException {
 		assertNotNull(location);
 
 		Resource resource = ctx.getResource(location);
 		try (Reader reader = new FileReader(resource.getFile())) {
-			CustomHeaderColumnNameMappingStrategy<T> strategy = new CustomHeaderColumnNameMappingStrategy<>();
+			CustomHeaderColumnNameMappingStrategy<?> strategy = new CustomHeaderColumnNameMappingStrategy<>();
 			strategy.setType(clazz);
 
-			CsvToBean<T> csvToBean = new CsvToBeanBuilder<T>(reader).withMappingStrategy(strategy)
+			CsvToBean csvToBean = new CsvToBeanBuilder(reader).withMappingStrategy(strategy)
 					.withFieldAsNull(CSVReaderNullFieldIndicator.EMPTY_QUOTES).withIgnoreLeadingWhiteSpace(true)
 					.build();
 
 			csvToBean.setCsvReader(new CommentSkipCsvReader(reader));
-			Iterator<T> iter = csvToBean.iterator();
+			Iterator iter = csvToBean.iterator();
 			while (iter.hasNext()) {
-				@SuppressWarnings("unchecked")
 				AbstractPersistable<Long> obj = (AbstractPersistable<Long>) iter.next();
 				if (obj.getId() == null) {
 					em.persist(obj);
@@ -110,7 +110,7 @@ public class CSVFormatProcessor<T> {
 				process(file);
 				continue;
 			}
-			if (!file.getName().endsWith(fileExtenstion)) {
+			if (!file.getName().endsWith(CSV_FILE_EXTENSION)) {
 				log.info("skip non csv file:{}", file.getAbsolutePath());
 				continue;
 			}
@@ -118,8 +118,7 @@ public class CSVFormatProcessor<T> {
 			String classPath = getClassName(file);
 			log.info("path:{}", classPath);
 			try {
-				@SuppressWarnings("unchecked")
-				Class<T> clazz = (Class<T>) ctx.getClassLoader().loadClass(classPath);
+				Class<?> clazz = ctx.getClassLoader().loadClass(classPath);
 				String fileUri = "file://"+file.getCanonicalPath();
 				process(clazz, fileUri);
 			} catch (Exception e) {
@@ -145,12 +144,12 @@ public class CSVFormatProcessor<T> {
 		em.flush();
 	}
 
-	private String getTableName(Class<T> clazz) {
-		Table[] t = clazz.getAnnotationsByType(Table.class);
-		if (t == null || t.length == 0) {
+	private String getTableName(Class<?> clazz) {
+		Table t = clazz.getAnnotation(Table.class);
+		if (t == null) {
 			return clazz.getName();
 		}
-		return t[0].name();
+		return t.name();
 	}
 
 	/**
@@ -172,7 +171,7 @@ public class CSVFormatProcessor<T> {
 
 		// file path로 부터 class 정보 추출
 		String path = file.getAbsolutePath().substring(processRootDirectory.length() + 1);
-		path = path.substring(0, path.length() - fileExtenstion.length());
+		path = path.substring(0, path.length() - CSV_FILE_EXTENSION.length());
 		path = StringUtils.replace(path, pathDelimeter, ".");
 		return path;
 	}

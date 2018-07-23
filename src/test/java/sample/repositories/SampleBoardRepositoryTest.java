@@ -1,6 +1,8 @@
 package sample.repositories;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
 
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.AfterAll;
@@ -8,27 +10,36 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import lombok.extern.slf4j.Slf4j;
+import processor.CSVFormatProcessor;
 import sample.config.TestConfig;
+import sample.entities.SampleBoard;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
-@DataJpaTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Slf4j
 public class SampleBoardRepositoryTest {
-	@Autowired
+	private static boolean dataLoaded = false;
 	
+	@Autowired
+	CSVFormatProcessor processor;
+	
+	@Autowired
+	SampleBoardRepository sbRepository;
 
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
+		
 	}
 
 	@AfterAll
@@ -37,6 +48,11 @@ public class SampleBoardRepositoryTest {
 
 	@BeforeEach
 	public void setUp() throws Exception {
+		if (dataLoaded) {
+			return;
+		}
+		processor.process(SampleBoard.class, "classpath:data/sample/entities/SampleBoard.csv");
+		dataLoaded = true;
 	}
 
 	@AfterEach
@@ -45,17 +61,33 @@ public class SampleBoardRepositoryTest {
 
 	@Test
 	public void testFindBySubject() {
-		fail("Not yet implemented");
+		List<SampleBoard> list = sbRepository.findBySubject("subject-1%");
+		
+		assertEquals(11, list.size());
+		assertEquals("subject-19", list.get(0).getSubject());
 	}
 
 	@Test
 	public void testFindAllSort() {
-		fail("Not yet implemented");
+		Iterable<SampleBoard> list = sbRepository.findAll();
+		int num = 0;
+		for(SampleBoard sampleBoard : list) {
+			log.info("SampleBoard:{}", sampleBoard);
+			num++;
+		}
+		assertEquals(21, num);
 	}
 
 	@Test
 	public void testFindAllPageable() {
-		fail("Not yet implemented");
+		Pageable pageable = PageRequest.of(0, 10);
+		Page<SampleBoard> paged = sbRepository.findAll(pageable);
+		int num=0;
+		for (SampleBoard sampleBoard : paged) {
+			log.info("SampleBoard:{}", sampleBoard);
+			num++;
+		}
+		assertEquals(10, num);
 	}
 
 }

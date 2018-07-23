@@ -43,7 +43,7 @@ class CSVFormatProcessorTest {
 	ApplicationContext ctx;
 	
 	@Autowired
-	CSVFormatProcessor<SampleBoard> processor;
+	CSVFormatProcessor processor;
 	
 	@Autowired
 	DataSource ds;

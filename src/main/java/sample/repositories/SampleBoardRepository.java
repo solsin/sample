@@ -10,5 +10,5 @@ import sample.entities.SampleBoard;
 public interface SampleBoardRepository extends PagingAndSortingRepository<SampleBoard, Long> {
 
     @Query("select sb from SampleBoard sb where sb.subject like ?1 order by id desc")
-    List<SampleBoard> findBySubject(String country);
+    List<SampleBoard> findBySubject(String subject);
 }
