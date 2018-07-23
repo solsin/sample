@@ -1,0 +1,24 @@
+#class: sample.entities.SampleBoard
+#id column이 존재하므로 일괄 등록 후, id 값으로 일괄 update
+id,subject,content,userName,useYn
+100,subject-1,<<<<content-1>>>>,tester,Y
+101,subject-2,<<<<content-2>>>>,tester,Y
+102,subject-3,<<<<content-3>>>>,tester,Y
+103,subject-4,<<<<content-4>>>>,tester,Y
+104,subject-5,<<<<content-5>>>>,tester,Y
+105,subject-6,<<<<content-6>>>>,tester,Y
+106,subject-7,<<<<content-7>>>>,tester,Y
+108,subject-8,<<<<content-8>>>>,tester,Y
+110,subject-9,<<<<content-9>>>>,tester,Y
+142,subject-10,<<<<content-10>>>>,tester,Y
+144,subject-11,<<<<content-11>>>>,tester,Y
+146,subject-12,<<<<content>>>>,tester,Y
+150,subject-13,<<<<content>>>>,tester,Y
+151,subject-14,<<<<content>>>>,tester,Y
+152,subject-15,<<<<content>>>>,tester,Y
+153,subject-16,<<<<content>>>>,tester,Y
+154,subject-17,<<<<content>>>>,tester,Y
+115,subject-18,<<<<content>>>>,tester,Y
+156,subject-19,<<<<content>>>>,tester,Y
+157,subject-20,<<<<content>>>>,tester,Y
+158,subject-21,<<<<content>>>>,tester,Y

@@ -1,0 +1,24 @@
+#class: sample.entities.SampleBoard
+# id가 없으므로 id sequence 자동 생성
+subject,content,userName,useYn
+subject-1,<<<<content-1>>>>,tester,Y
+subject-2,<<<<content-2>>>>,tester,Y
+subject-3,<<<<content-3>>>>,tester,Y
+subject-4,<<<<content-4>>>>,tester,Y
+subject-5,<<<<content-5>>>>,tester,Y
+subject-6,<<<<content-6>>>>,tester,Y
+subject-7,<<<<content-7>>>>,tester,Y
+subject-8,<<<<content-8>>>>,tester,Y
+subject-9,<<<<content-9>>>>,tester,Y
+subject-10,<<<<content-10>>>>,tester,Y
+subject-11,<<<<content-11>>>>,tester,Y
+subject-12,<<<<content>>>>,tester,Y
+subject-13,<<<<content>>>>,tester,Y
+subject-14,<<<<content>>>>,tester,Y
+subject-15,<<<<content>>>>,tester,Y
+subject-16,<<<<content>>>>,tester,Y
+subject-17,<<<<content>>>>,tester,Y
+subject-18,<<<<content>>>>,tester,Y
+subject-19,<<<<content>>>>,tester,Y
+subject-20,<<<<content>>>>,tester,Y
+subject-21,<<<<content>>>>,tester,Y

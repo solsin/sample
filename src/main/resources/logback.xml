@@ -10,7 +10,10 @@
     </encoder>
   </appender>
 
-  <logger name="dogani.powerchart" level="DEBUG"/>
+  <logger name="sample" level="DEBUG"/>
+  
+  <logger name="org.hibernate.SQL" level="DEBUG"/>
+  <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
 
   <root level="info">
     <appender-ref ref="STDOUT" />
