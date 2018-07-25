@@ -26,4 +26,18 @@ public @Getter @Setter class SampleBoard extends AbstractPersistable<Long> {
 	public SampleBoard(Long id) {
 		this.setId(id);
 	}
+	
+	public SampleBoard(Long id, String subject, String content, String userName) {
+		this.setId(id);
+		this.subject = subject;
+		this.content = content;
+		this.userName = userName;
+	}
+	
+	public static interface SB {
+		Long getId();
+		String getSubject();
+		String getContent();
+		String userName();
+	}
 }

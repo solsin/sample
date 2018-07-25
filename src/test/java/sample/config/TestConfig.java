@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @ComponentScan(basePackages = {"sample", "processor"})
 @EnableJpaRepositories(basePackages = {"sample.repositories"}, entityManagerFactoryRef="entityManagerFactoryBean")
 @Import({JPAConfig.class})
-@PropertySource("classpath:application.test.properties")
+@PropertySource({"classpath:application.test.properties"})
 @Slf4j
 public class TestConfig {
 

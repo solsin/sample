@@ -2,6 +2,7 @@ package sample.repositories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.FixMethodOrder;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -90,4 +92,38 @@ public class SampleBoardRepositoryTest {
 		assertEquals(10, num);
 	}
 
+	@Test
+	public void testFindWithNativeQeury() {
+		Collection<SampleBoard> list = sbRepository.findWithNativeQeury("subject-2%", "<<<<content-2>>>>");
+		int num=0;
+		for (SampleBoard sampleBoard : list) {
+			log.info("SampleBoard:{}", sampleBoard);
+			num++;
+		}
+		assertEquals(1, num);
+		
+		list = sbRepository.findWithNativeQeury("subject-2%", "<<<<content%");
+		num=0;
+		for (SampleBoard sampleBoard : list) {
+			log.info("SampleBoard:{}", sampleBoard);
+			num++;
+		}
+		assertEquals(3, num);
+	}
+	
+	@Test
+	public void testFindWithNativeQeury2() {
+		Collection<Object[]> list = sbRepository.findWithNativeQeury2("subject-2%", "<<<<content-2>>>>");
+		assertEquals(1, list.size());
+		Object[] objs = list.iterator().next();
+		assertEquals("subject-2", objs[1]);
+	}
+	
+	@Test
+	public void testFindWithNativeQeury3() {
+		Collection<SampleBoard.SB> list = sbRepository.findWithNativeQeury3("subject-2%", "<<<<content-2>>>>");
+		assertEquals(1, list.size());
+		SampleBoard.SB sb = list.iterator().next();
+		assertEquals("subject-2", sb.getSubject());
+	}
 }
