@@ -56,7 +56,10 @@ dependencies {
 		"ch.qos.logback:logback-core:1.2.3",
 		"org.apache.commons:commons-lang3:3.3.2",
 		"commons-io:commons-io:2.6",
-		"com.opencsv:opencsv:4.2"
+		"com.opencsv:opencsv:4.2",
+		"org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2",
+		"com.google.code.findbugs:jsr305:3.0.2",
+		"to.etc.domui:to.etc.domui:1.1" // selenium.webdriver에서 사용
 	)
 	
     // Use JUnit test framework
@@ -64,13 +67,14 @@ dependencies {
 	//testCompile("org.springframework.boot:spring-boot-starter-test")
 	testCompile(
 		'org.junit.jupiter:junit-jupiter-api:5.2.0',
-		'org.springframework.boot:spring-boot-starter-test'
+		'org.springframework.boot:spring-boot-starter-test',
+		'org.seleniumhq.selenium:selenium-java:3.13.0'
 	)
 	testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
 }
 
 test {
-	useJUnitPlatform()
+	//useJUnitPlatform()
 
 	testLogging {
 		events "passed", "skipped", "failed"

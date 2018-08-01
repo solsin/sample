@@ -3,12 +3,15 @@ package sample.repositories;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import sample.entities.SampleBoard;
 
+@Mapper
 public interface SampleBoardRepository extends PagingAndSortingRepository<SampleBoard, Long> {
 
     @Query("select sb from SampleBoard sb where sb.subject like ?1 order by id desc")

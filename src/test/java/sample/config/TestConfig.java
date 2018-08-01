@@ -2,6 +2,7 @@ package sample.config;
 
 import javax.annotation.PostConstruct;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootApplication
 @ComponentScan(basePackages = {"sample", "processor"})
 @EnableJpaRepositories(basePackages = {"sample.repositories"}, entityManagerFactoryRef="entityManagerFactoryBean")
+@MapperScan("sample.repositories")
 @Import({JPAConfig.class})
 @PropertySource({"classpath:application.test.properties"})
 @Slf4j

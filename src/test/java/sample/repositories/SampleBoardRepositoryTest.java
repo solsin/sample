@@ -38,6 +38,9 @@ public class SampleBoardRepositoryTest {
 	
 	@Autowired
 	SampleBoardRepository sbRepository;
+	
+	@Autowired
+	SampleBoardMapper sbMapper;
 
 	@BeforeAll
 	public static void setUpBeforeClass() throws Exception {
@@ -124,6 +127,14 @@ public class SampleBoardRepositoryTest {
 		Collection<SampleBoard.SB> list = sbRepository.findWithNativeQeury3("subject-2%", "<<<<content-2>>>>");
 		assertEquals(1, list.size());
 		SampleBoard.SB sb = list.iterator().next();
+		assertEquals("subject-2", sb.getSubject());
+	}
+	
+	@Test
+	public void testFindWithMybatis() {
+		Collection<SampleBoard> list = sbMapper.findWithMybatis("subject-2%", "<<<<content-2>>>>");
+		assertEquals(1, list.size());
+		SampleBoard sb = list.iterator().next();
 		assertEquals("subject-2", sb.getSubject());
 	}
 }
