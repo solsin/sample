@@ -1,0 +1,56 @@
+{
+  "id": "00a04dd3-87f0-46ca-ae39-2dc9e30979d8",
+  "name": "test",
+  "url": "https://www.seleniumhq.org",
+  "tests": [{
+    "id": "60a423c6-c381-452d-aa1f-039b204e2e4f",
+    "name": "Untitled",
+    "commands": [{
+      "id": "f697102c-caf0-4209-a0bb-aa8860d49c05",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "value": ""
+    }, {
+      "id": "dfb2330a-edcc-4eb4-a4c3-d8e3d8204426",
+      "comment": "",
+      "command": "clickAt",
+      "target": "id=q",
+      "value": "28,6"
+    }, {
+      "id": "41849ba8-1637-456f-8b95-4458e269a6a0",
+      "comment": "",
+      "command": "type",
+      "target": "id=q",
+      "value": "se"
+    }, {
+      "id": "ba9f472d-9a8c-47d1-9dbb-bc594c2b0f6c",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=q",
+      "value": "${KEY_DOWN}"
+    }, {
+      "id": "df6059ca-dc2e-4867-aceb-483fddb5196e",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=q",
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "c567bae1-cbfc-4560-95b7-384565359d94",
+      "comment": "",
+      "command": "clickAt",
+      "target": "id=submit",
+      "value": "22,13"
+    }]
+  }],
+  "suites": [{
+    "id": "4deeae54-688f-4c14-a3ea-271be3b4ef35",
+    "name": "Default Suite",
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["60a423c6-c381-452d-aa1f-039b204e2e4f"]
+  }],
+  "urls": ["https://www.seleniumhq.org/"],
+  "plugins": [],
+  "version": "1.0"
+}
