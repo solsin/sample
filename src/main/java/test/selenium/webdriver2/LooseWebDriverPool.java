@@ -16,12 +16,12 @@
 
 package test.selenium.webdriver2;
 
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.WebDriver;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.WebDriver;
 
 public final class LooseWebDriverPool extends AbstractWebDriverPool {
 

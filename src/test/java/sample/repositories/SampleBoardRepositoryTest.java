@@ -23,11 +23,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import lombok.extern.slf4j.Slf4j;
 import processor.CSVFormatProcessor;
-import sample.config.TestConfig;
+import sample.config.TestJPAConfig;
 import sample.entities.SampleBoard;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = TestJPAConfig.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Slf4j
 public class SampleBoardRepositoryTest {

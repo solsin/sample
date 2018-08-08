@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Error Page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+
+<style>
+.pre {
+    display: block;
+    unicode-bidi: embed;
+    font-family: monospace;
+    white-space: pre;
+}
+
+</style>  
+<script>
+function toggleVariableTable() {
+  var div_table_all_variables = $("#table_of_all_variables");
+  if (div_table_all_variables.css("display") == "none") {
+    div_table_all_variables.css("display", "block");
+  } else {
+    div_table_all_variables.css("display", "none");
+  }
+}
+</script>
+
+</head>
+<body>
+<h1>Error Page</h1>
+<p th:text="'Date: '+${#dates.format(timestamp, 'yyyy-MM-dd HH:mm:ss')}"/>
+<p th:text="'Error: '+${error}"/>
+<p th:text="'StatusCode: '+${status}"/>
+<p th:text="'Message: '+${message}"/>
+<p th:text="'Exception: '+${#vars.getVariable('javax.servlet.error.exception')}"/>
+
+<a href="/">Go Home</a>
+<br>
+<a href="javascript:toggleVariableTable();">Toggle (페이지 전체 variable)</a>
+<div id="table_of_all_variables" style="display: none;">
+<table class="table">
+    <tr th:each="var : ${#vars.getVariableNames()}">
+        <td th:text="${var}"></td>
+        <td th:text="${#vars.getVariable(var)}" class="pre"></td>
+    </tr>
+    <!-- Adding these manually because they're considered special.
+         see https://github.com/thymeleaf/thymeleaf/blob/thymeleaf-3.0.3.RELEASE/src/main/java/org/thymeleaf/context/WebEngineContext.java#L199
+    -->
+    <tr>
+        <td>param</td>
+        <td th:text="${#vars.getVariable('param')}"></td>
+    </tr>
+    <tr>
+        <td>session</td>
+        <td th:text="${#vars.getVariable('session')}"></td>
+    </tr>
+    <tr>
+        <td>application</td>
+        <td th:text="${#vars.getVariable('application')}"></td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

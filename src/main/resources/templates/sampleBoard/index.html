@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Sample Board</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+  
+<script>
+function frmSubmit() {
+  var frm = $('form[name="frm"]');
+  var sb = {
+      subject: frm.find('input[name="subject"]').val(),
+      userName: frm.find('input[name="userName"]').val(),
+      content: frm.find('textarea[name="content"]').val()
+  }
+
+  $('#target').html('sending..');
+
+  console.log("sb:"+JSON.stringify(sb));
+  $.ajax({
+      url: './insert',
+      type: 'post',
+      contentType: 'application/json',
+      data: JSON.stringify(sb)
+  }).done(function( data ) {
+    if ( console && console.log ) {
+      console.log( "Sample of data:", data.slice( 0, 100 ) );
+      $('#target').html(data);
+      location.reload();
+    }
+  }).fail(function() {
+    $('#target').html("<font color='red'>error occured</font>");
+  })
+}
+
+
+function frmSubmitToOtherURL() {
+  var frm = document.frm;
+  frm.method = "POST";
+  frm.action = "./insertAndRedirect";
+  frm.submit();
+}
+</script>
+</head>
+<body>
+<div th:with="sbList=${#vars.getVariable('sample.web.SBList')}">
+
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Spring Boot</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#about">About</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<div class="starter-template">
+			<h1>Sample Board</h1>
+		</div>
+
+		<p id="totalCount" th:text="${sbList.totalCount}"></p>
+		<table>
+		  <tr>
+		    <th>subject</th>
+		    <th>userName</th>
+		    <th>content</th>
+		    <th>useYn</th>
+		  </tr>
+		  <tr th:each="item,iterStat : ${sbList.items}">
+		    <td th:id="'item-subject-'+${item.id}"><a th:href="@{'./view?id='+${item.id}}" th:text="${item.subject}"></a></td>
+		    <td th:text="${item.userName}" th:id="'item-userName-'+${item.id}">userName</td>
+		    <td th:text="${item.content}" th:id="'item-content-'+${item.id}">content</td>
+		    <td th:text="${item.useYn}? #{true} : #{false}" th:id="'item-useYn-'+${item.id}">yes</td>
+		  </tr>
+		</table>
+		
+		<form name="frm">
+		<input type="text" name="subject"><br>
+		<input type="text" name="userName"><br>
+		<textarea name="content"></textarea><br>
+		<input type="button" th:value="#{button.insert}" onClick="frmSubmit();">
+		<input type="button" th:value="#{button.insert.redirect}" onClick="frmSubmitToOtherURL();">
+		<p id="target"></p>
+		</form>
+		
+	</div>
+	<!-- /.container -->
+</div>
+</body>
+</html>

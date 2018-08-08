@@ -16,4 +16,15 @@ public interface SampleBoardMapper {
     		"	   AND content like #{content} " + 
     		"     ORDER BY id desc")
     List<SampleBoard> findWithMybatis(@Param("subject") String subject, @Param("content") String content);
+
+    @Select(value="	SELECT count(id) " + 
+    		"	  FROM SAMPLE_BOARD " + 
+    		"	 WHERE useYn='Y' ")
+    int countOfList();
+    
+    @Select(value="	SELECT id, subject, content, userName " + 
+    		"	  FROM SAMPLE_BOARD " + 
+    		"	 WHERE useYn='Y' " + 
+    		"     ORDER BY id desc")
+    List<SampleBoard> list();
 }

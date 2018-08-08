@@ -1,0 +1,32 @@
+{
+  "id": "d929ce0b-23f4-4c9f-94e9-aeeccb3311e4",
+  "name": "Untitled Project",
+  "url": "http://localhost:8090",
+  "tests": [{
+    "id": "2aaa1558-b15d-4ab4-8798-df714d73bb40",
+    "name": "index",
+    "commands": [{
+      "id": "a6161170-eca6-4570-aecc-ce735c863ede",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "value": ""
+    }, {
+      "id": "6fad7a59-544c-44a4-890f-81424a33dcf8",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=h1",
+      "value": "Spring Boot Web Thymeleaf Welcome page"
+    }]
+  }],
+  "suites": [{
+    "id": "e8cd2576-9d37-406c-b127-cab9db615179",
+    "name": "Default Suite",
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["2aaa1558-b15d-4ab4-8798-df714d73bb40"]
+  }],
+  "urls": ["http://localhost:8090/"],
+  "plugins": [],
+  "version": "1.0"
+}

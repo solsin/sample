@@ -22,6 +22,8 @@ public class Command {
 			by = By.id(splits[1]);
 		} else if ("name".equals(key)) {
 			by = By.name(splits[1]);
+		} else if ("css".equals(key)) {
+			by = By.cssSelector(splits[1]);
 		}
 		
 		return by;

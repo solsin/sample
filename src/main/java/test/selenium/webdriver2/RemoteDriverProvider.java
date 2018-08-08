@@ -16,11 +16,11 @@
 
 package test.selenium.webdriver2;
 
+import java.net.URL;
+
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-
-import java.net.URL;
 
 public interface RemoteDriverProvider {
 

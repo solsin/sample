@@ -15,11 +15,11 @@
  */
 package test.selenium.webdriver2;
 
+import java.net.URL;
+
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.net.URL;
 
 /**
  * An utility that helps to create, reuse and dismiss WebDriver instances.

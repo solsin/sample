@@ -1,5 +1,7 @@
 package test.selenium.executor;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -68,9 +70,19 @@ public class ScriptExecutor {
 		case "type" :
 			driver.findElement(command.fromTarget()).sendKeys(command.sendKey());
 			return;
+		case "assertText" :
+			assertEquals(driver.findElement(command.fromTarget()).getText(), command.value);
+			return;
+		case "verifyText" :
+			String target = driver.findElement(command.fromTarget()).getText();
+			if (!target.equals(command.value)) {
+				log.warn("doesn't match:{}, {}", target, command.value);
+			}
+			return;
 		default :
 			log.warn("undefined command:{}", command.command);
 			return;				
 		}
 	}
+	
 }

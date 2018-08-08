@@ -1,4 +1,4 @@
-package test.selenium.executor;
+package sample.web;
 
 import java.io.IOException;
 
@@ -23,21 +23,19 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import lombok.extern.slf4j.Slf4j;
-import sample.config.TestJPAConfig;
+import sample.config.TestConfig;
+import test.selenium.executor.ScriptExecutor;
 import test.selenium.webdriver2.WebDriverPool;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = TestJPAConfig.class)
+@ContextConfiguration(classes = TestConfig.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @TestInstance(Lifecycle.PER_CLASS)
-@Slf4j
-class ScriptExecutorTest {
+public class IndexTest {
 	@Autowired
 	ApplicationContext ctx;
-
+	
 	WebDriver driver;
-
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -62,11 +60,18 @@ class ScriptExecutorTest {
 	@AfterEach
 	void tearDown() throws Exception {
 	}
-
+	
 	@Test
-	void testExecuteFile() throws JsonParseException, JsonMappingException, IOException {
+	public void testIndex() throws JsonParseException, JsonMappingException, IOException {
 		ScriptExecutor executor = new ScriptExecutor(driver);
-		Resource resource = ctx.getResource("classpath:selenium/script/sample.side");
+		Resource resource = ctx.getResource("classpath:selenium/script/index.side");
+		executor.execute(resource.getFile());
+	}
+	
+	@Test
+	void testInsert() throws JsonParseException, JsonMappingException, IOException {
+		ScriptExecutor executor = new ScriptExecutor(driver);
+		Resource resource = ctx.getResource("classpath:selenium/script/sampleBoard1.side");
 		executor.execute(resource.getFile());
 	}
 }

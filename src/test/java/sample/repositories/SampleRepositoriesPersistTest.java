@@ -23,7 +23,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.jdbc.JdbcTestUtils;
 
 import lombok.extern.slf4j.Slf4j;
-import sample.config.TestConfig;
+import sample.config.TestJPAConfig;
 import sample.entities.Sample;
 
 /**
@@ -35,7 +35,7 @@ import sample.entities.Sample;
  *
  */
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = TestJPAConfig.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Slf4j
 public class SampleRepositoriesPersistTest {

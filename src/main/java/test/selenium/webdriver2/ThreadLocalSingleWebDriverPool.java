@@ -15,12 +15,16 @@
  */
 package test.selenium.webdriver2;
 
+import java.net.URL;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
-
-import java.net.URL;
-import java.util.*;
-import java.util.stream.Collectors;
 
 public final class ThreadLocalSingleWebDriverPool extends AbstractWebDriverPool {
 

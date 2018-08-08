@@ -1,0 +1,38 @@
+{
+  "id": "4a3e9e57-08da-48fa-a8bb-e6979f555ce1",
+  "name": "SampleProject",
+  "url": "http://localhost:8090",
+  "tests": [{
+    "id": "e4475334-9773-4111-8cf2-fb2a3f7189e2",
+    "name": "SampleBoard",
+    "commands": [{
+      "id": "b03c954b-6947-4a83-bf2d-7367606d33eb",
+      "comment": "",
+      "command": "open",
+      "target": "/sampleBoard/",
+      "value": ""
+    }, {
+      "id": "3aa4c20d-4ea4-43eb-ae07-2e88da38b15a",
+      "comment": "",
+      "command": "verifyText",
+      "target": "id=totalCount",
+      "value": "0"
+    }, {
+      "id": "3efa0918-d922-4930-bf15-27df51094774",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=totalCount",
+      "value": "0"
+    }]
+  }],
+  "suites": [{
+    "id": "84b87acf-f71b-469d-afe5-4624bd293490",
+    "name": "Default Suite",
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["e4475334-9773-4111-8cf2-fb2a3f7189e2"]
+  }],
+  "urls": ["http://localhost:8090/"],
+  "plugins": [],
+  "version": "1.0"
+}

@@ -15,10 +15,10 @@
  */
 package test.selenium.webdriver2;
 
+import java.net.URL;
+
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
-
-import java.net.URL;
 
 public abstract class AbstractWebDriverPool implements WebDriverPool {
 

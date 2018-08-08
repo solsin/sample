@@ -18,11 +18,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import lombok.extern.slf4j.Slf4j;
-import sample.config.TestConfig;
+import sample.config.TestJPAConfig;
 import test.selenium.webdriver2.WebDriverPool;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = TestConfig.class)
+@ContextConfiguration(classes = TestJPAConfig.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @TestInstance(Lifecycle.PER_CLASS)
 @Slf4j
