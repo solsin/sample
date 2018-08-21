@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Sample Board</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+  integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.90/jsrender.js"></script>
+<!-- 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.90/jsrender.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.90/jsrender.min.js.map"></script>
+-->
+
+<script src="/message/ko.js"></script>
+<script>
+var JSRENDER_HELPER = {
+    message : function(code) {
+      var msgCode = "#message\\."+code.replace(".", "\\.");
+      var msg = $(msgCode);
+      if (msg.text()) {
+        return msg.text();
+      } else {
+        return MESSAGES[code];
+      }
+      return "";
+    },
+};
+
+  function frmSubmit(mode, frm) {
+    //var frm = $('form[name="frm"]');
+    //var sb = {
+    //  subject : frm.find('input[name="subject"]').val(),
+    //  userName : frm.find('input[name="userName"]').val(),
+    //  content : frm.find('textarea[name="content"]').val()
+    //}
+    var sb = {
+        id: frm.id.value,
+        subject: frm.subject.value,
+        userName: frm.userName.value,
+        content: frm.content.value
+    };
+
+    $('#target').html('sending..');
+
+    console.log("sb:" + JSON.stringify(sb));
+    var url = "";
+    if (mode == "remove") {
+      url = '/api/sampleBoard/remove';
+    } else {
+      url = '/api/sampleBoard/save';
+    }
+    $.ajax({
+      url : url,
+      type : 'post',
+      contentType : 'application/json',
+      data : JSON.stringify(sb)
+    }).done(function(data) {
+      if (console && console.log) {
+        console.log("Sample of data:", data);
+      }
+      $('#target').html(data);
+      if (mode == "update") {
+        view(data.id);
+      } else {
+        getListData();
+      }      
+    }).fail(function() {
+      $('#target').html("<font color='red'>error occured</font>");
+    })
+  }
+
+  function frmSubmitToOtherURL() {
+    var frm = document.frm;
+    frm.method = "POST";
+    frm.action = "./insertAndRedirect";
+    frm.submit();
+  }
+  
+  function getListData() {
+    $.ajax({
+      url : '/api/sampleBoard/list',
+      type : 'get',
+      contentType : 'application/json',
+      data : ''
+    }).done(function(data) {
+      renderListTemplate(data);
+    }).fail(function() {
+      $('#target').html("<font color='red'>error occured</font>");
+    })
+  }
+  
+  function renderListTemplate(data) {
+    var template = $.templates("#tmpl_list");
+    var htmlOutput = template.render(data);
+    $("#container_list").html(htmlOutput);
+    
+    $("#container_list").css("display", "block");
+    $("#container_view").css("display", "none");
+  }
+  
+  function view(id) {
+    $.ajax({
+      url : '/api/sampleBoard/view/'+id,
+      type : 'get',
+      contentType : 'application/json',
+      data : ''
+    }).done(function(data) {
+      console.log(JSRENDER_HELPER.message('sampleBoard.subject'));
+      var template = $.templates("#tmpl_view");
+      var htmlOutput = template.render(data);
+      $("#container_view").html(htmlOutput);
+      
+      $("#container_list").css("display", "none");
+      $("#container_view").css("display", "block");
+    }).fail(function() {
+      $('#target').html("<font color='red'>error occured</font>");
+    })
+  }
+  
+  function goMain() {
+    getListData();
+  }
+
+  
+  $(function() {
+    console.log("ready!");
+  
+    $.views.helpers(JSRENDER_HELPER);
+    $.views.settings.allowCode(true);
+    
+	getListData();
+  });
+</script>
+</head>
+<body>
+<div class="message" style="display: none">
+<p id="message.sampleBoard.subject" th:text="#{sampleBoard.subject}"/>
+</div>
+
+  <nav class="navbar navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Spring Boot</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div id="template_container"></div>
+  <!-- /.container -->
+
+  </div>
+  <div id="continaer_root">
+    <div id="container_list" style="display: block"></div>
+    <div id="container_view" style="display: none"></div>
+  </div>
+
+  
+<script id="tmpl_list" type="text/x-jsrender">
+<div class="starter-template">
+  <h1>Sample Board List</h1>
+</div>
+<p id="totalCount">{{:totalCount}}</p>
+<table>
+  <tr>
+    <th>subject</th>
+    <th>userName</th>
+    <th>content</th>
+    <th>useYn</th>
+  </tr>
+  {{* idx = 1}}
+  {{for items}}
+  <tr>
+    <td id="item-subject-{{:id}}"><a id="item-seq-{{*: idx++}}" href="javascript:view({{:id}});">{{:subject}}</a></td>
+    <td id="item-userName-{{:id}}">{{:userName}}</td>
+    <td id="item-content-{{:id}}">{{:content}}</td>
+    <td id="item-useYn-{{:id}}">{{:useYn}}</td>
+  </tr>
+  {{/for}}
+</table>
+  <form name="frm">
+    <input type="text" name="subject"><br> <input type="text" name="userName"><br>
+    <textarea name="content"></textarea>
+	<input type="hidden" name="id" value="">    
+	<br> <input type="button" name="btnInsert" th:value="#{button.insert}" onClick="frmSubmit('insert', this.form);">
+	
+    <p id="target"></p>
+  </form>
+</script>
+<script id="tmpl_view" type="text/x-jsrender">
+<div class="starter-template">
+  <h1>Sample Board View</h1>
+</div>
+
+<form name="frm">
+  <div class="row">
+    <div class="col-2">{{:~message('sampleBoard.subject')}}</div>
+    <div class="col">
+      <input type="text" name="subject" id="item-subject" value="{{:subject}}">
+    </div>
+    <div class="w-100"></div>
+    <div class="col-2">{{:~message('sampleBoard.userName')}}</div>
+    <div class="col">
+      <input type="text" name=userName id="item-userName" value="{{:userName}}">
+    </div>
+    <div class="w-100"></div>
+    <div class="col">{{:~message('sampleBoard.content')}}</div>
+    <div class="w-100"></div>
+    <div class="col">
+      <textarea name=content id="item-content" cols=80 rows=10>{{:content}}</textarea>
+    </div>
+  </div>
+
+  <input type="hidden" name="id" value="{{:id}}" />
+
+  <input type="button" name="btnList" value="{{:~message('button.list')}}" onClick="goMain();" />
+  <input type="button" name="btnUpdate" value="{{:~message('button.update')}}" onClick="frmSubmit('update', this.form);" />
+  <input type="button" name="btnRemove" value="{{:~message('button.remove')}}" onClick="frmSubmit('remove', this.form);" />
+</form>
+</script>
+
+</body>
+</html>

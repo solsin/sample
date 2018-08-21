@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import config.CXFConfig;
 import config.WebMVCConfig;
 import lombok.extern.slf4j.Slf4j;
 import sample.config.JPAConfig;
@@ -19,7 +20,7 @@ import sample.config.JPAConfig;
 @ComponentScan(basePackages = {"sample", "processor"})
 @EnableJpaRepositories(basePackages = {"sample.repositories"}, entityManagerFactoryRef="entityManagerFactoryBean")
 @MapperScan("sample.repositories")
-@Import({JPAConfig.class, WebMVCConfig.class})
+@Import({JPAConfig.class, WebMVCConfig.class, CXFConfig.class})
 @PropertySource({"classpath:application.properties"})
 @Slf4j
 public class SampleApplication {

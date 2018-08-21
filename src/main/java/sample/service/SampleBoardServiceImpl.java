@@ -21,6 +21,12 @@ import sample.repositories.SampleBoardRepository;
 import sample.web.SBList;
 import sample.web.SBRequest;
 
+/**
+ * SampleBoard Service layer implementation
+ * 
+ * @author Chulhui Park <chulhui72@gmail.com>
+ *
+ */
 @Service
 public class SampleBoardServiceImpl implements SampleBoardService {
 	@Autowired

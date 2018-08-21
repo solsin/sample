@@ -17,7 +17,7 @@ import sample.service.SampleBoardService;
 /**
  * JPA ±â¹ÝÀÇ sample board
  * 
- * @author Chulhui Park <chulhui72@gmail.com>
+ * @author Chulhui Park <charles@plgrim.com>
  *
  */
 @Controller
