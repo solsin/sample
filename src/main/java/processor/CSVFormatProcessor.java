@@ -1,19 +1,17 @@
 package processor;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.beans.IntrospectionException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
-import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Properties;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -25,16 +23,25 @@ import org.apache.commons.io.LineIterator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.enums.CSVReaderNullFieldIndicator;
 
+import config.StandAloneConfig;
 import lombok.extern.slf4j.Slf4j;
 import processor.csv.CommentSkipCsvReader;
 import processor.csv.CustomHeaderColumnNameMappingStrategy;
+import sample.config.JPAConfig;
 import sample.entities.AbstractPersistable;
 
 /**
@@ -65,7 +72,7 @@ public class CSVFormatProcessor {
 	@Transactional
 	public void process(Class clazz, String location) throws FileNotFoundException, IOException,
 			NoSuchMethodException, SecurityException, IntrospectionException {
-		assertNotNull(location);
+		assert location != null;
 
 		Resource resource = ctx.getResource(location);
 		try (Reader reader = new FileReader(resource.getFile())) {
@@ -99,8 +106,8 @@ public class CSVFormatProcessor {
 	}
 
 	public void process(File rootDirectory) {
-		assertTrue(rootDirectory.exists());
-		assertTrue(rootDirectory.isDirectory());
+		assert rootDirectory.exists();
+		assert rootDirectory.isDirectory();
 		if (processRootDirectory == null) {
 			processRootDirectory = rootDirectory.getAbsolutePath();
 		}
@@ -186,3 +193,4 @@ public class CSVFormatProcessor {
 		}
 	}
 }
+

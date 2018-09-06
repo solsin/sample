@@ -1,7 +1,5 @@
 package test.selenium.executor;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -71,7 +69,7 @@ public class ScriptExecutor {
 			driver.findElement(command.fromTarget()).sendKeys(command.sendKey());
 			return;
 		case "assertText" :
-			assertEquals(driver.findElement(command.fromTarget()).getText(), command.value);
+			assert driver.findElement(command.fromTarget()).getText() == command.value;
 			return;
 		case "verifyText" :
 			String target = driver.findElement(command.fromTarget()).getText();
