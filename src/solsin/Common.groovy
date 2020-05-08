@@ -1,5 +1,5 @@
 // src/solsin/Common.groovy
-import solsin
+package solsin
 
 def checkoutSCM(String branch) {
 	return {
