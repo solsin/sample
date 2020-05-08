@@ -1,7 +1,8 @@
+@Library('common-lib') _
+
 pipeline {
     agent any
-    
-    @Library('common-lib')
+       
 
 /**
     library identifier: 'common-lib@master', retriever: modernSCM(
