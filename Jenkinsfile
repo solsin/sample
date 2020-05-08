@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    library identifier: 'solsin.Common@master', retriever: modernSCM(
+    library identifier: 'common-lib@master', retriever: modernSCM(
         [$class: 'GitSCMSource',
         remote: 'https://github.com/solsin/jenkinsfile.git',
         credentialsId: 'github-solasin'])
