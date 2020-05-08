@@ -15,7 +15,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 script {
-                    common.checkoutSCM("master")
+                    common.checkoutSCM 'master'
                 }                
             }
         }
