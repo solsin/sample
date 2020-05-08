@@ -15,7 +15,7 @@ pipeline {
                 echo 'Building..'
                 script {
                     def common = new Common()
-                    common.checkoutSCM 'master'
+                    common.checkoutSCM('master')
                 }                
             }
         }
