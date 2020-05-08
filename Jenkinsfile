@@ -1,8 +1,7 @@
-@Library('common-lib') _
+@Library('common-lib') import solsin.*
 
 pipeline {
     agent any
-       
 
 /**
     library identifier: 'common-lib@master', retriever: modernSCM(
@@ -15,7 +14,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 script {
-                    def common = new solsin.Common()
+                    def common = new Common()
                     common.checkoutSCM 'master'
                 }                
             }
