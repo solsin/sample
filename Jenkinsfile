@@ -15,6 +15,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 script {
+                    def common = new solsin.Common()
                     common.checkoutSCM 'master'
                 }                
             }
