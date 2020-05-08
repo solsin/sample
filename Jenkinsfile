@@ -14,7 +14,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                common.checkoutSCM("master")
+                script {
+                    common.checkoutSCM("master")
+                }                
             }
         }
         stage('Test') {
