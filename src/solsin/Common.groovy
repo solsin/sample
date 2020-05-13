@@ -7,7 +7,7 @@ def checkoutSCM(String branch) {
     echo VERSION_NUMBER
     
 	git branch: branch, credentialsId: 'glyde-codecommit-admin', url: 'https://git-codecommit.ap-northeast-2.amazonaws.com/v1/repos/glyde-mall-develop'
-	sh "git tag ${VERSION_NUMBER}"
+	sh "git tag -a ${VERSION_NUMBER} -m 'tagged by jenkins'"
     withCredentials([
         usernamePassword(credentialsId: 'glyde-codecommit-admin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')
     ]) {
