@@ -9,9 +9,9 @@ def checkoutSCM(String branch) {
 	git branch: branch, credentialsId: 'glyde-codecommit-admin', url: 'https://git-codecommit.ap-northeast-2.amazonaws.com/v1/repos/glyde-mall-develop'
 	sh "git tag ${VERSION_NUMBER}"
     withCredentials([
-        usernamePassword(credentialsId: 'github-solasin', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
+        usernamePassword(credentialsId: 'glyde-codecommit-admin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')
     ]) {
-        sh "git push origin ${VERSION_NUMBER}"
+        sh "git push origin ${VERSION_NUMBER} -u ${USERNAME} -p ${PASSWORD}"
     }
 }
 
