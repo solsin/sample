@@ -1,9 +1,9 @@
 // src/solsin/Common.groovy
 package solsin
 
-def checkoutSCM(String branch) {
-    def timeStamp = Calendar.getInstance().getTime().format('YYYYMMdd',TimeZone.getTimeZone('CST'))
-    def VERSION_NUMBER = timeStamp+"."+currentBuild.number
+def checkoutSCM(String branch, jobName) {
+    def timeStamp = Calendar.getInstance().getTime().format('YYYY/MM/dd/',TimeZone.getTimeZone('CST'))
+    def VERSION_NUMBER = timeStamp+"/${jobName}/"+currentBuild.number
     echo VERSION_NUMBER
     
 	git branch: branch, credentialsId: 'glyde-codecommit-admin', url: 'https://git-codecommit.ap-northeast-2.amazonaws.com/v1/repos/glyde-mall-develop'
