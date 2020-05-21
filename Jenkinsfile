@@ -7,9 +7,10 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                echo 'Selected TAG: $GIT_TAG'
                 script {
                     def common = new Common()
-                    common.checkoutSCM('master', 'dev')
+                    //common.checkoutSCM('master', 'dev')
                 }                
             }
         }
