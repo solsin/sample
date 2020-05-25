@@ -24,9 +24,7 @@ def checkoutWithTag(String gitHost, String specificBranch, String tag) {
     if (tag.startsWith("dev/")) {
       newBranchName = "stg/"+tag.substring(4, tag.length())
     }
-    
-    sh "git fetch --all"
-    
+        
     EXISTING_REMOTE_BRANCH = sh(
       script: "git branch -r --list origin/${newBranchName}",
       returnStdout: true
@@ -38,10 +36,12 @@ def checkoutWithTag(String gitHost, String specificBranch, String tag) {
     
     if (EXISTING_LOCAL_BRANCH.length() == 0 && EXISTING_REMOTE_BRANCH.length() == 0) {
       //create local branch from dev tag
-      sh "git checkout -b ${newBranchName} ${tag}"      
+      sh "git checkout -b ${newBranchName} ${tag}"
+      sh "git commit -m 'created branch by jenkins'"      
     } else if (EXISTING_LOCAL_BRANCH.length() == 0 && EXISTING_REMOTE_BRANCH.length() > 0) {
       //create local branch from remote branch
       sh "git checkout -b ${newBranchName} ${EXISTING_REMOTE_BRANCH}"
+      sh "git commit -m 'created branch by jenkins'"
     } else if (EXISTING_LOCAL_BRANCH.length()) {
       // using local branch
       sh "git checkout ${newBranchName}"
