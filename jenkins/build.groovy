@@ -68,37 +68,37 @@ pipeline {
   agent any
 
   stages {
-    ws('/apps/workspace') {
-      sh "pwd"
+    stage('checkout') {
+      ws('/apps/workspace') {
+        sh "pwd"
+      }
+      steps {
+        script {
+          echo 'Checkout..'
+          
+          if (ENV_NAME == "dev") {
+            checkoutBranch(GIT_HOST, "master", JOB_NAME)                  
+          } else if (ENV_NAME == "stg") {
+            echo "Selected TAG: ${GIT_TAG}"
+            checkoutWithTag(GIT_HOST, GIT_BRANCH, GIT_TAG)
+          }
+        }                
+      }
     }
-      stage('checkout') {
-        steps {
-          script {
-            echo 'Checkout..'
-            
-            if (ENV_NAME == "dev") {
-              checkoutBranch(GIT_HOST, "master", JOB_NAME)                  
-            } else if (ENV_NAME == "stg") {
-              echo "Selected TAG: ${GIT_TAG}"
-              checkoutWithTag(GIT_HOST, GIT_BRANCH, GIT_TAG)
-            }
-          }                
-        }
+    stage('Build') {
+      steps {
+          echo 'Build..'
       }
-      stage('Build') {
-        steps {
-            echo 'Build..'
-        }
+    }
+    stage('Test') {
+      steps {
+          echo 'Testing..'
       }
-      stage('Test') {
-        steps {
-            echo 'Testing..'
-        }
+    }
+    stage('Deploy') {
+      steps {
+          echo 'Deploying....'
       }
-      stage('Deploy') {
-        steps {
-            echo 'Deploying....'
-        }
-      }
+    }
   }
 }
