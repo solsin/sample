@@ -14,6 +14,15 @@ def checkoutBranch(String gitHost, String branch, jobName) {
 }
 
 def checkoutWithTag(String gitHost, String specificBranch, String tag) {
+  if (GIT_TAG == "master") {
+    // dev tag중 가장 마지막 tag 선택
+    GIT_TAG = sh(
+      script: "git tag -l --sort=-v:refname dev/*/bo* | head -n 1",
+      returnStdout: true
+    ).trim()
+    echo "get latest tag: ${GIT_TAG}"
+  }
+              
   def branchName = ""
   if (specificBranch == null || specificBranch.length() == 0) {
     // specificBranch가 빈값이 아닌 경우 해당 브랜치로 checkout을 받는다
@@ -58,6 +67,10 @@ def checkoutWithTag(String gitHost, String specificBranch, String tag) {
 pipeline {
   agent any
 
+  ws('/apps/workspace') {
+    sh "pwd"
+  }
+  
   stages {
       stage('checkout') {
         steps {
@@ -68,14 +81,6 @@ pipeline {
               checkoutBranch(GIT_HOST, "master", JOB_NAME)                  
             } else if (ENV_NAME == "stg") {
               echo "Selected TAG: ${GIT_TAG}"
-              if (GIT_TAG == "master") {
-                // dev tag중 가장 마지막 tag 선택
-                GIT_TAG = sh(
-                  script: "git tag -l --sort=-v:refname dev/*/bo* | head -n 1",
-                  returnStdout: true
-                ).trim()
-                echo "get latest tag: ${GIT_TAG}"
-              }
               checkoutWithTag(GIT_HOST, GIT_BRANCH, GIT_TAG)
             }
           }                
