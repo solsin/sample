@@ -49,7 +49,7 @@ def checkoutWithTag(String gitHost, String specificBranch, String tag) {
         usernamePassword(credentialsId: GIT_CREDENTIAL, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')
     ]) {
         USERNAME = USERNAME.replaceAll("@", "%40")
-        sh "git push https://${USERNAME}:${PASSWORD}@${gitHost} --set-upstream origin ${newBranchName}"
+        sh "git push https://${USERNAME}:${PASSWORD}@${gitHost} -u origin ${newBranchName}"
     }
 
   }
