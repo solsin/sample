@@ -69,9 +69,8 @@ pipeline {
           script {
             echo 'Checkout..'
             
-            def common = new Common()
             if (ENV_NAME == "dev") {
-              common.checkoutBranch(GIT_HOST, "master", JOB_NAME)                  
+              checkoutBranch(GIT_HOST, "master", JOB_NAME)                  
             } else if (ENV_NAME == "stg") {
               echo "Selected TAG: ${GIT_TAG}"
               if (GIT_TAG == "master") {
@@ -82,7 +81,7 @@ pipeline {
                 ).trim()
                 echo "get latest tag: ${GIT_TAG}"
               }
-              common.checkoutWithTag(GIT_HOST, GIT_BRANCH, GIT_TAG)
+              checkoutWithTag(GIT_HOST, GIT_BRANCH, GIT_TAG)
             }
           }                
         }
