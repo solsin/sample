@@ -70,7 +70,7 @@ pipeline {
   stages {
     stage('checkout') {
       steps {
-        ws('/apps/workspace') {
+        ws('/apps/workspace/stg') {
           sh "pwd"
         }
         script {
