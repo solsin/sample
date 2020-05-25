@@ -24,7 +24,6 @@ def checkoutWithTag(String gitHost, String specificBranch, String tag) {
     if (tag.startsWith("dev/")) {
       newBranchName = "stg/"+tag.substring(4, tag.length())
     }
-    params.newBranchName = newBranchName
         
     EXISTING_REMOTE_BRANCH = sh(
       script: "git branch -r --list origin/${newBranchName}",
@@ -58,10 +57,6 @@ def checkoutWithTag(String gitHost, String specificBranch, String tag) {
 
 pipeline {
   agent any
-
-  parameters {
-    string(name: 'newBranchName',defaultValue: '',description: 'created branch name')
-  }
 
   stages {
       stage('checkout') {
