@@ -36,16 +36,15 @@ def checkoutWithTag(String gitHost, String specificBranch, String tag) {
     
     if (EXISTING_LOCAL_BRANCH.length() == 0 && EXISTING_REMOTE_BRANCH.length() == 0) {
       //create local branch from dev tag
-      sh "git checkout -b ${newBranchName} ${tag}"
-      sh "git commit -m 'created branch by jenkins'"      
+      sh "git checkout -b ${newBranchName} ${tag}"      
     } else if (EXISTING_LOCAL_BRANCH.length() == 0 && EXISTING_REMOTE_BRANCH.length() > 0) {
       //create local branch from remote branch
       sh "git checkout -b ${newBranchName} ${EXISTING_REMOTE_BRANCH}"
-      sh "git commit -m 'created branch by jenkins'"
     } else if (EXISTING_LOCAL_BRANCH.length()) {
       // using local branch
       sh "git checkout ${newBranchName}"
-    }    
+    }
+    sh "git commit -m 'created branch by jenkins'"  
     
     // else {
     //  git branch: newBranchName, credentialsId: 'glyde-codecommit-admin', url: 'https://git-codecommit.ap-northeast-2.amazonaws.com/v1/repos/glyde-mall-develop'
