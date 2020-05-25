@@ -43,8 +43,7 @@ def checkoutWithTag(String gitHost, String specificBranch, String tag) {
     } else if (EXISTING_LOCAL_BRANCH.length()) {
       // using local branch
       sh "git checkout ${newBranchName}"
-    }
-    sh "git commit -m 'created branch by jenkins'"  
+    }  
     
     // else {
     //  git branch: newBranchName, credentialsId: 'glyde-codecommit-admin', url: 'https://git-codecommit.ap-northeast-2.amazonaws.com/v1/repos/glyde-mall-develop'
@@ -55,7 +54,7 @@ def checkoutWithTag(String gitHost, String specificBranch, String tag) {
       usernamePassword(credentialsId: GIT_CREDENTIAL, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')
   ]) {
       USERNAME = USERNAME.replaceAll("@", "%40")
-      sh "git push https://${USERNAME}:${PASSWORD}@${gitHost} --set-upstream origin"
+      sh "git push https://${USERNAME}:${PASSWORD}@${gitHost} --set-upstream origin ${newBranchName}"
   }
 }
 
