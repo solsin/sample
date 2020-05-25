@@ -67,11 +67,10 @@ def checkoutWithTag(String gitHost, String specificBranch, String tag) {
 pipeline {
   agent any
 
-  ws('/apps/workspace') {
-    sh "pwd"
-  }
-  
   stages {
+    ws('/apps/workspace') {
+      sh "pwd"
+    }
       stage('checkout') {
         steps {
           script {
