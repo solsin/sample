@@ -69,10 +69,10 @@ pipeline {
 
   stages {
     stage('checkout') {
-      ws('/apps/workspace') {
-        sh "pwd"
-      }
       steps {
+        ws('/apps/workspace') {
+          sh "pwd"
+        }
         script {
           echo 'Checkout..'
           
