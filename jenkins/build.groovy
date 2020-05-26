@@ -70,18 +70,16 @@ pipeline {
   stages {
     stage('checkout') {
       steps {
-        ws('/apps/workspace/stg') {
-          sh "pwd"
+        sh "pwd"
+        
+        script {
+          echo 'Checkout..'
           
-          script {
-            echo 'Checkout..'
-            
-            if (ENV_NAME == "dev") {
-              checkoutBranch(GIT_HOST, "master", JOB_NAME)                  
-            } else if (ENV_NAME == "stg") {
-              echo "Selected TAG: ${GIT_TAG}"
-              checkoutWithTag(GIT_HOST, GIT_BRANCH, GIT_TAG)
-            }
+          if (ENV_NAME == "dev") {
+            checkoutBranch(GIT_HOST, "master", JOB_NAME)                  
+          } else if (ENV_NAME == "stg") {
+            echo "Selected TAG: ${GIT_TAG}"
+            checkoutWithTag(GIT_HOST, GIT_BRANCH, GIT_TAG)
           }
         }
       }
